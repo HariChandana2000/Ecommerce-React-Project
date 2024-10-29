@@ -1,11 +1,22 @@
 import React from "react";
 import styles from "./Header.module.scss";
+import { Link } from "react-router-dom";
+
+const logo = (
+  <div className={styles.logo}>
+    <Link to='/'>
+      <h2>
+        e<span>Shop</span>.
+      </h2>
+    </Link>
+  </div>
+);
 
 const Header = () => {
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <header>
+      <div className={styles.header}>{logo}</div>
+    </header>
   );
 };
 
