@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, Contact, Login, Register, Reset } from "./pages";
 import { Header, Footer } from "./components";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

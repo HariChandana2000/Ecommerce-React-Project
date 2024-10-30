@@ -27,9 +27,9 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(error);
         setIsLoading(false);
-        toast.error("Login failed");
+        toast.error(error.message);
       });
   };
 

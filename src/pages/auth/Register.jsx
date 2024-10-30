@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
 
 const Register = () => {
