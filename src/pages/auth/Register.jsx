@@ -32,7 +32,8 @@ const Register = () => {
         navigate("/login");
       })
       .catch((error) => {
-        toast.error(error.message);
+        console.log(error.message);
+        toast.error("Registration failed");
         setIsLoading(false);
       });
   };
