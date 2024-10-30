@@ -7,7 +7,10 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import {
+  REMOVE_ACTIVE_USER,
+  SET_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
 
 const logo = (
   <div className={styles.logo}>
@@ -60,9 +63,10 @@ const Header = () => {
         );
       } else {
         setUserName("");
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, []);
+  }, [dispatch, userName]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
