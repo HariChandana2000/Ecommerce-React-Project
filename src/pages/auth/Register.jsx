@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import Loader from "../../components/loader/Loader";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");

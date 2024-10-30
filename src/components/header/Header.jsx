@@ -97,7 +97,7 @@ const Header = () => {
               <NavLink className={activeLink} to='/order-history'>
                 My Orders
               </NavLink>
-              <NavLink className={activeLink} to='/' onClick={logoutUser}>
+              <NavLink to='/' onClick={logoutUser}>
                 Logout
               </NavLink>
             </span>

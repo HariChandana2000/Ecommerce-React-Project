@@ -5,7 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Card from "../../components/card/Card";
 import { auth } from "../../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../components/loader/Loader";
 
@@ -22,13 +26,26 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        toast.success("Logged in successfully");
         setIsLoading(false);
+        toast.success("Logged in successfully");
         navigate("/");
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
         setIsLoading(false);
+      });
+  };
+
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        toast.success("Logged in successfully");
+        const user = result.user;
+        navigate("/");
+      })
+      .catch((error) => {
         toast.error(error.message);
       });
   };
@@ -66,7 +83,10 @@ const Login = () => {
                 <Link to='/reset'>Forgot Password</Link>
               </div>
               <p>-- or --</p>
-              <button className='--btn --btn-danger --btn-block'>
+              <button
+                className='--btn --btn-danger --btn-block'
+                onClick={signInWithGoogle}
+              >
                 <FaGoogle color='#fff' style={{ marginRight: "10px" }} />
                 Login With Google
               </button>
