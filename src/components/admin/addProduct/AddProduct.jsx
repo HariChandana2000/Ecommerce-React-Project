@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import styles from "./AddProduct.module.scss";
 import Card from "../../card/Card";
 import { db, storage } from "../../../firebase/config";
-import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import {
+  uploadBytesResumable,
+  ref,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { toast } from "react-toastify";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import Loader from "../../loader/Loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -109,7 +114,25 @@ const AddProducts = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    if (product.imageURL !== productEdit.imageURL) {
+      const storageRef = ref(storage, productEdit.imageURL);
+      deleteObject(storageRef);
+    }
     try {
+      setDoc(doc(db, "products", id), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate(),
+      });
+
+      toast.success("Product details ddited successfully");
+      setIsLoading(false);
+      navigate("/admin/all-products");
     } catch (error) {
       toast.error(error.message);
       setIsLoading(false);
