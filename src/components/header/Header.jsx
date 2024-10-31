@@ -11,6 +11,7 @@ import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
+import ShowOnLogin, { ShowOnLogout } from "../hiddenLinks/HiddenLink";
 
 const logo = (
   <div className={styles.logo}>
@@ -80,7 +81,7 @@ const Header = () => {
     signOut(auth)
       .then(() => {
         toast.success("Logged out successfully");
-        navigate("/login");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -123,22 +124,27 @@ const Header = () => {
           </ul>
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
-              <NavLink className={activeLink} to='/login'>
-                Login
-              </NavLink>
-              <a href='#'>
-                <FaUserCircle size={16} />
-                Hi, {userName}
-              </a>
-              <NavLink className={activeLink} to='/register'>
-                Register
-              </NavLink>
-              <NavLink className={activeLink} to='/order-history'>
-                My Orders
-              </NavLink>
-              <NavLink to='/' onClick={logoutUser}>
-                Logout
-              </NavLink>
+              <ShowOnLogout>
+                <NavLink className={activeLink} to='/login'>
+                  Login
+                </NavLink>
+              </ShowOnLogout>
+              <ShowOnLogin>
+                <a href='#' style={{ color: "#ff7722" }}>
+                  <FaUserCircle size={16} />
+                  Hi, {userName}
+                </a>
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <NavLink className={activeLink} to='/order-history'>
+                  My Orders
+                </NavLink>
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <NavLink to='/' onClick={logoutUser}>
+                  Logout
+                </NavLink>
+              </ShowOnLogin>
             </span>
             {cart}
           </div>
