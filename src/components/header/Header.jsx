@@ -61,7 +61,7 @@ const Header = () => {
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
-            userName: userName,
+            username: userName,
             userId: user.uid,
           })
         );
