@@ -6,7 +6,9 @@ import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Loader from "../../loader/Loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../../redux/slice/productSlice";
 
 const categories = [
   { id: 1, name: "Laptop" },
@@ -25,11 +27,24 @@ const initialState = {
 };
 
 const AddProducts = () => {
-  const [product, setProduct] = useState({ ...initialState });
+  const { id } = useParams();
+  const products = useSelector(selectProducts);
+  const productEdit = products.find((item) => item.id === id);
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id, { ...initialState }, productEdit);
+    return newState;
+  });
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  function detectForm(id, f1, f2) {
+    if (id === "ADD") {
+      return f1;
+    }
+    return f2;
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,13 +105,24 @@ const AddProducts = () => {
     }
   };
 
+  const editProduct = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+    } catch (error) {
+      toast.error(error.message);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       {isLoading && <Loader />}
       <div className={styles.product}>
-        <h1>Add New Product</h1>
+        <h1>{detectForm(id, "Add New Product", "Edit Product")}</h1>
         <Card cardClass={styles.card}>
-          <form onSubmit={addProduct}>
+          <form onSubmit={detectForm(id, addProduct, editProduct)}>
             <label>Product Name:</label>
             <input
               type='text'
@@ -190,7 +216,7 @@ const AddProducts = () => {
             ></textarea>
 
             <button type='submit' className='--btn --btn-primary'>
-              Save Product
+              {detectForm(id, "Save Product", "Edit Product")}
             </button>
           </form>
         </Card>
