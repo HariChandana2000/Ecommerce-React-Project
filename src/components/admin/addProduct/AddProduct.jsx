@@ -19,15 +19,22 @@ const AddProducts = () => {
     desc: "",
   });
 
-  const handleInputChange = (e) => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
 
   const handleImageChange = (e) => {};
+
+  const addProduct = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className={styles.product}>
       <h1>Add New Product</h1>
       <Card cardClass={styles.card}>
-        <form>
+        <form onSubmit={addProduct}>
           <label>Product Name:</label>
           <input
             type='text'
