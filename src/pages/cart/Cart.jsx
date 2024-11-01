@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_TO_CART,
+  CALCULATE_SUB_TOTAL,
+  CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
   selectCartItems,
@@ -30,6 +32,14 @@ const Cart = () => {
   const removeFromCart = (cart) => {
     dispatch(REMOVE_FROM_CART(cart));
   };
+
+  const clearCart = () => {
+    dispatch(CLEAR_CART());
+  };
+
+  useEffect(() => {
+    dispatch(CALCULATE_SUB_TOTAL());
+  }, [cartItems, dispatch]);
 
   return (
     <section>
@@ -107,7 +117,9 @@ const Cart = () => {
             </table>
 
             <div className={styles.summary}>
-              <button className='--btn --btn-danger'>Clear Cart</button>
+              <button className='--btn --btn-danger' onClick={clearCart}>
+                Clear Cart
+              </button>
               <div className={styles.checkout}>
                 <div>
                   <Link to='/#products'>&larr; Continue shopping</Link>
