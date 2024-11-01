@@ -10,7 +10,7 @@ const ProductList = ({ products }) => {
   const [search, setSearch] = useState("");
 
   return (
-    <div className={styles["product-list"]} id='product'>
+    <div className={styles["product-list"]} id='products'>
       <div className={styles.top}>
         <div className={styles.icons}>
           <BsFillGridFill
