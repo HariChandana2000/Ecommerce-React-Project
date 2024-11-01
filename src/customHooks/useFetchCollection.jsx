@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import { toast } from "react-toastify";
 
-const useFetchCollection = ({ collectionName }) => {
+const useFetchCollection = (collectionName) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
