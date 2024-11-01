@@ -86,6 +86,14 @@ const cartSlice = createSlice({
 
       state.cartTotalAmount = totalAmount;
     },
+
+    CALCULATE_TOTAL_QUANTITY(state, action) {
+      const totalCartQuantity = state.cartItems.reduce(
+        (acc, item) => acc + item.cartQuantity,
+        0
+      );
+      state.cartTotalQuantity = totalCartQuantity;
+    },
   },
 });
 
@@ -95,6 +103,7 @@ export const {
   REMOVE_FROM_CART,
   CLEAR_CART,
   CALCULATE_SUB_TOTAL,
+  CALCULATE_TOTAL_QUANTITY,
 } = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.cartItems;
