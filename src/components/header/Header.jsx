@@ -6,7 +6,7 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
@@ -15,6 +15,10 @@ import ShowOnLogin, { ShowOnLogout } from "../hiddenLinks/HiddenLink";
 import AdminOnlyRoute, {
   AdminOnlyLink,
 } from "../adminOnlyRoute/AdminOnlyRoute";
+import {
+  CALCULATE_TOTAL_QUANTITY,
+  selectCartTotalQuantity,
+} from "../../redux/slice/cartSlice";
 
 const logo = (
   <div className={styles.logo}>
@@ -26,23 +30,39 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to='/cart'>
-      Cart
-      <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
-
 const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [userName, setUserName] = useState("");
+  const [scrollPage, setScrollPage] = useState(false);
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to='/cart'>
+        Cart
+        <FaShoppingCart size={20} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
+
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, []);
+
+  const fixNavbar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
+
+  window.addEventListener("scroll", fixNavbar);
 
   //Monitor currently signed in user
   useEffect(() => {
@@ -93,7 +113,7 @@ const Header = () => {
   };
 
   return (
-    <header>
+    <header className={scrollPage ? styles.fixed : null}>
       <div className={styles.header}>
         {logo}
         <nav
