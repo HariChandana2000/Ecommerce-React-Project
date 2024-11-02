@@ -9,6 +9,7 @@ import {
   Cart,
   CheckoutDetails,
   Checkout,
+  CheckoutSuccess,
 } from "./pages";
 import { Header, Footer, ProductDetails } from "./components";
 import { ToastContainer } from "react-toastify";
@@ -31,6 +32,7 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/checkout-details' element={<CheckoutDetails />} />
           <Route path='/checkout' element={<Checkout />} />
+          <Route path='/checkout-success' element={<CheckoutSuccess />} />
 
           <Route
             path='/admin/*'
