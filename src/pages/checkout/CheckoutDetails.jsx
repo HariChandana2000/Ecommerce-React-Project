@@ -22,9 +22,15 @@ const CheckoutDetails = () => {
     ...initialAddressState,
   });
 
-  const handleShipping = () => {};
+  const handleShipping = (e) => {
+    const { name, value } = e.target;
+    setShippingAddress({ ...shippingAddress, [name]: value });
+  };
 
-  const handleBilling = () => {};
+  const handleBilling = (e) => {
+    const { name, value } = e.target;
+    setBillingAddress({ ...billingAddress, [name]: value });
+  };
 
   const handleSubmit = () => {};
 
@@ -121,6 +127,100 @@ const CheckoutDetails = () => {
                 required
                 onChange={(e) => handleShipping(e)}
               />
+            </Card>
+
+            {/* Billing Address Card */}
+            <Card cardClass={styles.card}>
+              <h3>Billing Address</h3>
+              <label>Name:</label>
+              <input
+                type='text'
+                name='name'
+                value={billingAddress.name}
+                placeholder='Name'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              <label>Address Line 1:</label>
+              <input
+                type='text'
+                name='line1'
+                value={billingAddress.line1}
+                placeholder='Address Line 1'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              <label>Address Line 2:</label>
+              <input
+                type='text'
+                name='line2'
+                value={billingAddress.line2}
+                placeholder='Address Line 2'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              <label>City:</label>
+              <input
+                type='text'
+                name='city'
+                value={billingAddress.city}
+                placeholder='City'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              <label>State:</label>
+              <input
+                type='text'
+                name='state'
+                value={billingAddress.state}
+                placeholder='State'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              <label>Postal Code:</label>
+              <input
+                type='text'
+                name='postal_code'
+                value={billingAddress.postal_code}
+                placeholder='Postal code'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              {/*Country Input*/}
+              <label>Country: </label>
+              <CountryDropdown
+                valueType='short'
+                className={styles.select}
+                value={billingAddress.country}
+                onChange={(val) =>
+                  handleBilling({
+                    target: {
+                      name: "country",
+                      value: val,
+                    },
+                  })
+                }
+              />
+
+              <label>Phone:</label>
+              <input
+                type='text'
+                name='phone'
+                value={billingAddress.phone}
+                placeholder='Phone'
+                required
+                onChange={(e) => handleBilling(e)}
+              />
+
+              <button type='submit' className='--btn --btn-primary'>
+                Proceed To Checkout
+              </button>
             </Card>
           </div>
         </form>
