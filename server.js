@@ -12,16 +12,22 @@ app.get("/", (req, res) => {
   res.send("Welcome to eShop website");
 });
 
+const array = [];
+
 const calculateOrderAmount = (items) => {
-  let total = 0;
-  items.forEach((item) => {
-    total += item.amount;
+  items.map((item) => {
+    const { price, cartQuantity } = item;
+    const cartItemAmount = price * cartQuantity;
+
+    return array.push(cartItemAmount);
   });
-  return total;
+  const totalAmount = array.reduce((acc, price) => acc + price, 0);
+
+  return totalAmount * 100;
 };
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+  const { items, shipping, description } = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -31,12 +37,24 @@ app.post("/create-payment-intent", async (req, res) => {
     automatic_payment_methods: {
       enabled: true,
     },
+    description,
+    shipping: {
+      address: {
+        line1: shipping.line1,
+        line2: shipping.line2,
+        city: shipping.city,
+        country: shipping.country,
+        state: shipping.state,
+        postal_code: shipping.postal_code,
+      },
+      name: shipping.name,
+      phone: shipping.phone,
+    },
+    //receipt_email: customer email
   });
 
   res.send({
     clientSecret: paymentIntent.client_secret,
-    // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
-    dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`,
   });
 });
 
