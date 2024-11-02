@@ -11,6 +11,7 @@ import {
   Checkout,
   CheckoutSuccess,
   OrderHistory,
+  OrderDetails,
 } from "./pages";
 import { Header, Footer, ProductDetails } from "./components";
 import { ToastContainer } from "react-toastify";
@@ -35,6 +36,7 @@ function App() {
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/checkout-success' element={<CheckoutSuccess />} />
           <Route path='/order-history' element={<OrderHistory />} />
+          <Route path='/order-details/:id' element={<OrderDetails />} />
 
           <Route
             path='/admin/*'
