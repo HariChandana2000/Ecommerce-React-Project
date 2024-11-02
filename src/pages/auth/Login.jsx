@@ -10,15 +10,25 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
+import { useSelector } from "react-redux";
+import { selectPreviousURL } from "../../redux/slice/cartSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const previousURL = useSelector(selectPreviousURL);
   const navigate = useNavigate();
+
+  const redirectUser = () => {
+    if (previousURL.includes("cart")) {
+      return navigate("/cart");
+    }
+    navigate("/");
+  };
 
   const loginUser = (e) => {
     e.preventDefault();
@@ -28,7 +38,7 @@ const Login = () => {
       .then((userCredential) => {
         setIsLoading(false);
         toast.success("Logged in successfully");
-        navigate("/");
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);
@@ -43,7 +53,7 @@ const Login = () => {
       .then((result) => {
         toast.success("Logged in successfully");
         const user = result.user;
-        navigate("/");
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);
