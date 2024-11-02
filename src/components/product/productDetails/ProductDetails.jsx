@@ -13,6 +13,7 @@ import {
   DECREASE_CART,
   selectCartItems,
 } from "../../../redux/slice/cartSlice";
+import useFetchDocument from "../../../customHooks/useFetchDocument";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -22,16 +23,18 @@ const ProductDetails = () => {
   const cartItems = useSelector(selectCartItems);
   const cart = cartItems.find((item) => item.id === id);
 
-  const getProduct = async () => {
-    const productRef = doc(db, "products", id);
-    const productSnap = await getDoc(productRef);
+  const { document } = useFetchDocument("products", id);
 
-    if (productSnap.exists()) {
-      setProduct({ id, ...productSnap.data() });
-    } else {
-      toast.error("Product not found");
-    }
-  };
+  // const getProduct = async () => {
+  //   const productRef = doc(db, "products", id);
+  //   const productSnap = await getDoc(productRef);
+
+  //   if (productSnap.exists()) {
+  //     setProduct({ id, ...productSnap.data() });
+  //   } else {
+  //     toast.error("Product not found");
+  //   }
+  // };
 
   const addToCart = (product) => {
     dispatch(ADD_TO_CART(product));
@@ -46,8 +49,8 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    getProduct();
-  }, []);
+    setProduct(document);
+  }, [document]);
 
   return (
     <section>
