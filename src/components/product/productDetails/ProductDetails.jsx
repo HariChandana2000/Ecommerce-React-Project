@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ProductDetails.module.scss";
 import { Link, useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import { toast } from "react-toastify";
 import spinnerImg from "../../../assets/spinner.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import {

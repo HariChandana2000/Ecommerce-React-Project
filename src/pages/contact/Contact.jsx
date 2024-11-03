@@ -14,7 +14,7 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "service_ikhgowk",
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
         "template_3sl3dll",
         form.current,
         "NpLapiPCOWgiK4sB_"
