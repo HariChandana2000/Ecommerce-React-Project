@@ -42,7 +42,8 @@ const Checkout = () => {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:4242/create-payment-intent", {
+    //http://localhost:4242/create-payment-intent
+    fetch("https://eshop-react-firebase.herokuapp.com/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
