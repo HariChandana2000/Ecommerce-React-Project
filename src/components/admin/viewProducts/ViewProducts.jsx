@@ -21,13 +21,21 @@ import {
   STORE_PRODUCTS,
 } from "../../../redux/slice/productSlice";
 import useFetchCollection from "../../../customHooks/useFetchCollection";
+import Search from "../../search/Search";
+import {
+  FILTER_BY_SEARCH,
+  selectFilteredProducts,
+} from "../../../redux/slice/filterSlice";
 
 const ViewProducts = () => {
   const { data, isLoading } = useFetchCollection("products");
 
+  const [search, setSearch] = useState("");
+
   const dispatch = useDispatch();
 
   const products = useSelector(selectProducts);
+  const filteredProducts = useSelector(selectFilteredProducts);
 
   useEffect(() => {
     dispatch(
@@ -36,6 +44,10 @@ const ViewProducts = () => {
       })
     );
   }, [data, dispatch]);
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }));
+  }, [products, search, dispatch]);
 
   // const getProducts = () => {
   //   setIsLoading(true);
@@ -110,7 +122,14 @@ const ViewProducts = () => {
       {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
-        {products.length === 0 ? (
+        <div className={styles.search}>
+          <p>
+            <b>{filteredProducts.length}</b> Products found
+          </p>
+
+          <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
+        {filteredProducts.length === 0 ? (
           <p>No Products Found!</p>
         ) : (
           <table>
@@ -125,7 +144,7 @@ const ViewProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => {
+              {filteredProducts.map((product, index) => {
                 const { id, name, price, imageURL, category } = product;
                 return (
                   <tr key={id}>
