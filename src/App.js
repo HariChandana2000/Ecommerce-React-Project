@@ -13,7 +13,7 @@ import {
   OrderHistory,
   OrderDetails,
 } from "./pages";
-import { Header, Footer, ProductDetails } from "./components";
+import { Header, Footer, ProductDetails, ReviewProducts } from "./components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
@@ -37,6 +37,7 @@ function App() {
           <Route path='/checkout-success' element={<CheckoutSuccess />} />
           <Route path='/order-history' element={<OrderHistory />} />
           <Route path='/order-details/:id' element={<OrderDetails />} />
+          <Route path='/review-product/:id' element={<ReviewProducts />} />
 
           <Route
             path='/admin/*'
