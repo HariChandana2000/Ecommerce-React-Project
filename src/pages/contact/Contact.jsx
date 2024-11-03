@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./Contact.module.scss";
 import Card from "../../components/card/Card";
 import { FaEnvelope, FaPhoneAlt, FaTwitter } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+  const form = useRef();
+
   const sendEmail = (e) => {
     e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_ikhgowk",
+        "template_3sl3dll",
+        form.current,
+        "NpLapiPCOWgiK4sB_"
+      )
+      .then((result) => {
+        toast.success("Message sent successfully");
+      })
+      .catch((error) => {
+        toast.error(error.text);
+      });
+
+    e.target.reset();
   };
   return (
     <section>
       <div className={`container ${styles.contact}`}>
         <h2>Contact Us</h2>
         <div className={styles.section}>
-          <form onSubmit={sendEmail}>
+          <form onSubmit={sendEmail} ref={form}>
             <Card cardClass={styles.card}>
               <label>Name:</label>
               <input
