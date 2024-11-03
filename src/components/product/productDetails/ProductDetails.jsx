@@ -130,7 +130,7 @@ const ProductDetails = () => {
                 {filteredReviews.map((userReview, index) => {
                   const { rate, review, reviewDate, userName } = userReview;
                   return (
-                    <div className={styles.review}>
+                    <div className={styles.review} key={index}>
                       <StarsRating value={rate} disabled />
                       <p>{review}</p>
                       <span>
