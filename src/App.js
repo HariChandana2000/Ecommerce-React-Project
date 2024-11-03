@@ -12,6 +12,7 @@ import {
   CheckoutSuccess,
   OrderHistory,
   OrderDetails,
+  NotFound,
 } from "./pages";
 import { Header, Footer, ProductDetails, ReviewProducts } from "./components";
 import { ToastContainer } from "react-toastify";
@@ -47,6 +48,8 @@ function App() {
               </AdminOnlyRoute>
             }
           />
+
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>
