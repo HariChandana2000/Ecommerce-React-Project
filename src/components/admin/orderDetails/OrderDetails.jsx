@@ -84,7 +84,7 @@ const OrderDetails = () => {
             </table>
           </>
         )}
-        <ChangeOrderStatus />
+        <ChangeOrderStatus order={order} id={id} />
       </div>
     </>
   );

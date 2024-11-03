@@ -2,13 +2,35 @@ import React, { useState } from "react";
 import styles from "./ChangeOrderStatus.module.scss";
 import Loader from "../../loader/Loader";
 import Card from "../../card/Card";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const ChangeOrderStatus = () => {
+const ChangeOrderStatus = ({ order, id }) => {
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const editOrder = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    const orderConfig = {
+      ...order,
+      orderStatus: status,
+      editedAt: Timestamp.now().toDate(),
+    };
+
+    try {
+      setDoc(doc(db, "orders", id), orderConfig);
+      setIsLoading(false);
+      toast.success("Order status changed");
+      navigate("/admin/orders");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
   };
 
   return (
