@@ -14,7 +14,10 @@ Welcome to the E-commerce React Project! This project is a fully functional e-co
 
 ## Demo
 
-[Link to the live demo](https://eshop-react-firebase-8649a165e368.herokuapp.com/)
+Link to the live demo: https://eshop-react-firebase-8649a165e368.herokuapp.com/
+
+## LinkedIn Post
+Link to LinkedIn post: https://www.linkedin.com/posts/harichan2000_eshop-app-activity-7258843194753187841-0UYH?utm_source=share&utm_medium=member_desktop
 
 
 ## Installation
